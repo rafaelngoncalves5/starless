@@ -1,0 +1,19 @@
+1 - Primeiro instalei com o -> composer create-project laravel/laravel my-app
+
+2 - Apareceu -> 'Your requirements could not be resolved to an installable set of 
+packages.'
+
+2.1 - Rodei o comando -> composer install --ignore-platform-reqs para resolver o 
+problema
+
+3 - Apareceu -> Failed to download spatie/ignition from dist: The zip extension and 
+unzip/7z commands are both missing, skipping. The php.ini used by your command-line 
+PHP is: C:\php\php.ini Now trying to download from source
+
+3.1 - Então eu descomentei o ';extension=zip' no 'php.ini'
+
+4 - Após isso, o comando -> php artisan serve passou a funcionar corretamente
+
+5 - Após isso, fui no .env na raíz do projeto e configurei as variáveis do bd pra MySQL
+
+6 - 
