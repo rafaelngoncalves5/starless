@@ -1,13 +1,13 @@
 1 - Primeiro instalei com o -> composer create-project laravel/laravel my-app
 
-2 - Apareceu -> 'Your requirements could not be resolved to an installable set of 
+2 - Apareceu -> 'Your requirements could not be resolved to an installable set of
 packages.'
 
-2.1 - Rodei o comando -> composer install --ignore-platform-reqs para resolver o 
+2.1 - Rodei o comando -> composer install --ignore-platform-reqs para resolver o
 problema
 
-3 - Apareceu -> Failed to download spatie/ignition from dist: The zip extension and 
-unzip/7z commands are both missing, skipping. The php.ini used by your command-line 
+3 - Apareceu -> Failed to download spatie/ignition from dist: The zip extension and
+unzip/7z commands are both missing, skipping. The php.ini used by your command-line
 PHP is: C:\php\php.ini Now trying to download from source
 
 3.1 - Então eu descomentei o ';extension=zip' no 'php.ini'
@@ -20,7 +20,7 @@ PHP is: C:\php\php.ini Now trying to download from source
 
 7 - Fui tentar fazer algo na prática
 
-8 - Criei uma model Post, usei mass assignment e $attributes, daí rodei o artisan com 
+8 - Criei uma model Post, usei mass assignment e $attributes, daí rodei o artisan com
 as migrações para criar as models user e Post
 
 9 - Criei uma view nova e renderizei sem controller nas rota "/"
@@ -31,5 +31,22 @@ as migrações para criar as models user e Post
     - php artisan key:generate
     - php artisan config:cache
 
-11 - Criei uma tabela posts usando o comando php artisan make:migration 
+11 - Criei uma tabela posts usando o comando php artisan make:migration
 create_posts_table e apliquei as migrações com o php artisan migrate
+
+12 - Depois de 5k horas, descobri que não definimos as colunas nas models, precisamos
+fazer isso nas migrações do eloquent
+
+13 - O processo com o eloquent é:
+
+    13.1 - php artisan make:model NomeModel
+    13.2 - php artisan make:migration create_nomemodels_table
+    13.3 - Altera as migrações manualmente
+    13.4 - php artisan migrate
+
+14 - Aprendi que no eloquent, uma many-to-many, é feita da seguinte forma:
+    14.1 - Cria as tabelas
+    14.2 - Cria a tabela terciária (normalmente weak entity) com unsignedBigIntegers
+    14.3 - Roda as migrações
+    14.4 - Cria as respectivas funções de acesso nas tabelas linkadas usando o
+    'belongsToMany()'
