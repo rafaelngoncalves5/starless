@@ -15,7 +15,7 @@
 </form>
 
 @if (request()->getMethod() === 'POST')
-<p>Data received => {{ new_post }} created with success!</p>
+<p>Data received => {{ print_r($new_post) }} created with success!</p>
 @else
 <p>Sua request não é POST</p>
 @endif

@@ -13,8 +13,8 @@ class PostController extends Controller
 
     public function index(): View
     {
-
-        return view("index");
+        $posts = Post::all();
+        return view("posts.index", ['posts' => $posts]);
     }
 
     public function create(Post $post, Request $request): View
