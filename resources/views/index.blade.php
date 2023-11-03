@@ -3,7 +3,7 @@
 
 <body>
 
-    <h1>Running up and down the floor, my head, is an animal!</h1>
+    <h1>Core</h1>
 
     <main>
         <h2>List of routes and functionality:</h2>
@@ -11,6 +11,9 @@
         <ul>
             <li>
                 <a href="{{ route('post_create') }}">Create posts</a>
+            </li>
+            <li>
+                <a href="{{ route('user_create') }}">Create User</a>
             </li>
         </ul>
     </main>

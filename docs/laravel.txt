@@ -49,4 +49,4 @@ fazer isso nas migrações do eloquent
     14.2 - Cria a tabela terciária (normalmente weak entity) com unsignedBigIntegers
     14.3 - Roda as migrações
     14.4 - Cria as respectivas funções de acesso nas tabelas linkadas usando o
-    'belongsToMany()'
+    'belongsToMany()', nas models

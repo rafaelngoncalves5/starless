@@ -29,7 +29,7 @@ class PostController extends Controller
             $title = $data["title"];
             $body = $data["body"];
 
-            $new_post = Post::create(["title" => $title, "body" => $body]);
+            $new_post = Post::create(["title" => $title, "body" => $body, "user_id" => 1]);
 
             return view("posts.create", ['new_post' => $new_post]);
 

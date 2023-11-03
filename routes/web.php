@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [PostController::class, 'index'])->name('index');
 
 Route::match(['get', 'post'], '/posts/create', [PostController::class, 'create'])->name('post_create');
+
+// Users
+Route::match(['get', 'post'], '/users/create', [UserController::class, 'create'])->name('user_create');
