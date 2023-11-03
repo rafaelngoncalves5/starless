@@ -16,4 +16,19 @@ PHP is: C:\php\php.ini Now trying to download from source
 
 5 - Após isso, fui no .env na raíz do projeto e configurei as variáveis do bd pra MySQL
 
-6 - 
+6 - Li uma tonelada de documentação
+
+7 - Fui tentar fazer algo na prática
+
+8 - Criei uma model Post, usei mass assignment e $attributes, daí rodei o artisan com 
+as migrações para criar as models user e Post
+
+9 - Criei uma view nova e renderizei sem controller nas rota "/"
+
+10 - Reparei num com application key lacking
+
+10.1 - Para resolver, rodei os seguintes comandos:
+    - php artisan key:generate
+    - php artisan config:cache
+
+11 - 
