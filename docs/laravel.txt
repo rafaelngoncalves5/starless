@@ -31,4 +31,5 @@ as migrações para criar as models user e Post
     - php artisan key:generate
     - php artisan config:cache
 
-11 - 
+11 - Criei uma tabela posts usando o comando php artisan make:migration 
+create_posts_table e apliquei as migrações com o php artisan migrate

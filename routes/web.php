@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+use App\Http\Controllers\PostController;
+
+Route::get('/', [PostController::class, 'index'])->name('index');
+
+Route::match(['get', 'post'], '/posts/create', [PostController::class, 'create'])->name('post_create');

@@ -1,13 +1,19 @@
 <!DOCTYPE html> <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> <head> <meta charset="utf-8"> <meta
-    name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Hello, my new index!</title>
-
-</head>
+    name="viewport" content="width=device-width, initial-scale=1"> <title>Hello, my new index!</title> </head>
 
 <body>
 
-<h1>Running up and down the floor, my head, is an animal!</h1>
+    <h1>Running up and down the floor, my head, is an animal!</h1>
+
+    <main>
+        <h2>List of routes and functionality:</h2>
+
+        <ul>
+            <li>
+                <a href="{{ route('post_create') }}">Create posts</a>
+            </li>
+        </ul>
+    </main>
 
 </body>
 
