@@ -19,8 +19,19 @@
             <li><strong>Posted by</strong> - {{ $post['user_id'] }}</li>
 
             <div style='margin: 1rem 0; display: flex; justify-content: center;'>
-                <a class='primary-btn' style='background-color: var(--accent-color); color: var(--primary-color); text-decoration: none; font-size: larger;  font-weight: bold;' href="{{ route('post_create') }}">Edit</a>
-                <a class='primary-btn' style='text-decoration: none; font-size: larger; font-weight: bold;' href="{{ route('post_delete') }}">Delete</a>
+
+                <form method='post' action="">
+                    @csrf
+                    @method('PUT')
+                    <button type='submit' class='primary-btn' style='background-color: var(--accent-color); color: var(--primary-color); text-decoration: none; font-size: larger;  font-weight: bold;'>Edit</button>
+                </form>
+
+                <form method='post' action="{{ route('post_delete', $post['id']) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type='submit' class='primary-btn' style='text-decoration: none; font-size: larger; font-weight: bold;'>Delete</button>
+                </form>
+
             </div>
 
         </ul>

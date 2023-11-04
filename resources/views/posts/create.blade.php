@@ -8,7 +8,6 @@
 
     <main>
         <h1>Post something:</h1>
-
         <form method='post' action="{{ route('post_create') }}">
             @csrf
 
