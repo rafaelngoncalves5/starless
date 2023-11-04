@@ -9,13 +9,9 @@
     <main>
         <h1>Routes:</h1>
 
-        <ul >
+        <ul>
             <li style='box-shadow:none;'>
-                <a href="{{ route('post_create') }}">Create posts</a>
-            </li>
-
-            <li style='box-shadow:none;'>
-                <a href="{{ route('post_index') }}">See all posts</a>
+                <a href="{{ route('post_index') }}">Posts <strong>[CRUD]</strong></a>
             </li>
 
             <hr />

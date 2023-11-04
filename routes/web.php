@@ -22,6 +22,7 @@ Route::view("/success", 'success')->name("success");
 // Posts
 Route::get('/posts/', [PostController::class, 'index'])->name('post_index');
 Route::match(['get', 'post'], '/posts/create', [PostController::class, 'create'])->name('post_create');
+Route::match(['get', 'post', 'put'], '/posts/update/{id}', [PostController::class, 'update'])->name('post_update');
 Route::match(['delete', 'post'], '/posts/delete/{id}', [PostController::class, 'delete'])->name('post_delete');
 
 // Users

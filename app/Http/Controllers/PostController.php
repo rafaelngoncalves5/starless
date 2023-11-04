@@ -40,6 +40,26 @@ class PostController extends Controller
         }
     }
 
+    public function update(int $id, Request $request)
+    {
+        if ($request->method() == "GET") {
+
+            $post = Post::findOrFail($id);
+
+            return view("posts.update", ['post' => $post]);
+        } else if ($request->method() == 'POST' || $request->method() == 'PUT') {
+            $post = Post::findOrFail($id);
+
+            $data = $request->all();
+
+            $post->update(['title' => $data['title'], 'body' => $data['body']]);
+
+            return view('success', ['feedback' => "Post {$post->title} updated with success!"]);
+        } else {
+            return view(abort(405, "Error: method not allowed!"));
+        }
+    }
+
     public function delete(int $id, Request $request)
     {
         Post::findOrFail($id)->delete();

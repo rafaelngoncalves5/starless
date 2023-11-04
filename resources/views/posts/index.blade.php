@@ -20,11 +20,8 @@
 
             <div style='margin: 1rem 0; display: flex; justify-content: center;'>
 
-                <form method='post' action="">
-                    @csrf
-                    @method('PUT')
-                    <button type='submit' class='primary-btn' style='background-color: var(--accent-color); color: var(--primary-color); text-decoration: none; font-size: larger;  font-weight: bold;'>Edit</button>
-                </form>
+
+                <a href="{{ route('post_update', $post['id']) }}" class='primary-btn' style='background-color: var(--accent-color); color: var(--primary-color); text-decoration: none; font-size: larger;  font-weight: bold;'>Edit</a>
 
                 <form method='post' action="{{ route('post_delete', $post['id']) }}">
                     @csrf
