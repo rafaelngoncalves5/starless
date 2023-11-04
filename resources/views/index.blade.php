@@ -6,23 +6,21 @@
 
     @include('components.navbar')
 
-    <h1>Core</h1>
-
     <main>
-        <h2>List of routes and functionality:</h2>
+        <h1>Routes:</h1>
 
-        <ul>
-            <li>
+        <ul >
+            <li style='box-shadow:none;'>
                 <a href="{{ route('post_create') }}">Create posts</a>
             </li>
 
-            <li>
+            <li style='box-shadow:none;'>
                 <a href="{{ route('post_index') }}">See all posts</a>
             </li>
 
             <hr />
 
-            <li>
+            <li style='box-shadow:none;'>
                 <a href="{{ route('user_create') }}">Create User</a>
             </li>
 

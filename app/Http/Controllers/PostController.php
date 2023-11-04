@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // use App\Http\Controllers\Controller;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class PostController extends Controller
 
         } else if ($request->method() == "POST") {
             $data = $request->all();
-            
+
             $title = $data["title"];
             $body = $data["body"];
 
@@ -37,6 +38,11 @@ class PostController extends Controller
             // Could place for a custom not allowed view
             return view(abort(405, "Error: method not allowed!"));
         }
+    }
+
+    public function delete(Post $post, Request $request): RedirectResponse
+    {
+        return redirect()->route('index');
     }
 }
 

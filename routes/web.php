@@ -21,6 +21,7 @@ Route::view("/", 'index')->name("index");
 // Posts
 Route::get('/posts/', [PostController::class, 'index'])->name('post_index');
 Route::match(['get', 'post'], '/posts/create', [PostController::class, 'create'])->name('post_create');
+Route::delete('/posts/delete', [PostController::class, 'delete'])->name('post_delete');
 
 // Users
 Route::match(['get', 'post'], '/users/create', [UserController::class, 'create'])->name('user_create');

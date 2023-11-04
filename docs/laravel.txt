@@ -50,3 +50,6 @@ fazer isso nas migrações do eloquent
     14.3 - Roda as migrações
     14.4 - Cria as respectivas funções de acesso nas tabelas linkadas usando o
     'belongsToMany()', nas models
+    14.5 - Uso o attach() para fazer a relação
+
+15 - 
