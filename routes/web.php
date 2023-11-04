@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 
+Route::view("/", 'index')->name("index");
+
 // Posts
-Route::get('/', [PostController::class, 'index'])->name('post_index');
+Route::get('/posts/', [PostController::class, 'index'])->name('post_index');
 Route::match(['get', 'post'], '/posts/create', [PostController::class, 'create'])->name('post_create');
 
 // Users

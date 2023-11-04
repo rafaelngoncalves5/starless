@@ -1,27 +1,27 @@
-<!DOCTYPE html> <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> <head> <meta charset="utf-8"> <meta
-    name="viewport" content="width=device-width, initial-scale=1"> <title>Hello, my new index!</title> </head> <body>
+<!DOCTYPE html>
 
-<h1>Post your stuff here!</h1>
-<form method='post' action="{{ route('user_create') }}">
-    @csrf
+@include('base')
 
-    <label for='username'>Username:</label>
-    <input id='username' name='username' placeholder='johndoe5'></input>
+<main>
 
-    <label for='email'>Email:</label>
-    <input id='email' name='email' placeholder='johndoe5@mail.com'></input>
+    @include('components.navbar')
 
-    <label for='password'>Password:</label>
-    <input id='password' name='password' type='password'></input>
+    <h1>Post your stuff here!</h1>
+    <form method='post' action="{{ route('user_create') }}">
+        @csrf
 
-    <button type='submit'>Submit</button>
-</form>
+        <label for='username'>Username:</label>
+        <input id='username' name='username' placeholder='johndoe5'></input>
 
-@if (request()->getMethod() === 'POST')
-<p>Data received => {{ print_r($new_user) }} created with success!</p>
-@else
-<p>Sua request não é POST</p>
-@endif
+        <label for='email'>Email:</label>
+        <input id='email' name='email' placeholder='johndoe5@mail.com'></input>
+
+        <label for='password'>Password:</label>
+        <input id='password' name='password' type='password'></input>
+
+        <button type='submit'>Submit</button>
+    </form>
+</main>
 
 </body>
 
