@@ -17,6 +17,10 @@
             <label for='body'>Body:</label>
             <textarea id='body' name='body'></textarea>
 
+            @foreach($errors->all() as $error)
+            <span class='error'><strong> - </strong>{{ $error }}</span>
+            @endforeach
+
             <button type='submit'>Submit</button>
         </form>
     </main>

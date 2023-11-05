@@ -18,13 +18,19 @@ class PostController extends Controller
         return view("posts.index", ['posts' => $posts]);
     }
 
-    public function create(Post $post, Request $request): View
+    public function create(Post $post, Request $request): view
     {
         if ($request->method() == 'GET') {
 
             return view("posts.create");
 
         } else if ($request->method() == "POST") {
+
+            $request->validate([
+                "title" => "required|max:50|filled|string|",
+                "body" => "required|filled|string",
+            ]);
+
             $data = $request->all();
 
             $title = $data["title"];
@@ -32,7 +38,7 @@ class PostController extends Controller
 
             $new_post = Post::create(["title" => $title, "body" => $body, "user_id" => 1]);
 
-            return view("posts.create", ['new_post' => $new_post]);
+            return view("success", ['feedback' => "Post {$new_post->body} created with success!"]);
 
         } else {
             // Could place for a custom not allowed view
@@ -40,15 +46,23 @@ class PostController extends Controller
         }
     }
 
-    public function update(int $id, Request $request)
+    public function update(int $id, Request $request) : view
     {
         if ($request->method() == "GET") {
 
             $post = Post::findOrFail($id);
 
             return view("posts.update", ['post' => $post]);
+
         } else if ($request->method() == 'POST' || $request->method() == 'PUT') {
+
             $post = Post::findOrFail($id);
+
+            // Validates, and throw it all to the session
+            $request->validate([
+                "title" => ["required", "max:50", "filled", "string"],
+                "body" => ["required", "filled", "string"]
+            ]);
 
             $data = $request->all();
 
@@ -60,11 +74,11 @@ class PostController extends Controller
         }
     }
 
-    public function delete(int $id, Request $request)
+    public function delete(int $id, Request $request) : RedirectResponse
     {
         Post::findOrFail($id)->delete();
 
-        return view("success", ["feedback" => "The post $id was deleted with success!"]);
+        return to_route("success", ["feedback" => "The post $id was deleted with success!"]);
     }
 }
 

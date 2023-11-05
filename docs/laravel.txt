@@ -52,4 +52,6 @@ fazer isso nas migrações do eloquent
     'belongsToMany()', nas models
     14.5 - Uso o attach() para fazer a relação
 
-15 - 
+15 - Percebi um erro de timestamp do mysql e usei o public $timestamps = false e
+gerei a migração com $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+

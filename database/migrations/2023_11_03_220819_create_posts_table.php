@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('title');
             $table->text('body')->nullable(false);
             $table->unsignedBigInteger('user_id');
             $table->integer('likes_counter')->default(0);
             $table->text('picture')->nullable(true);
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             # FK
             $table->foreign('user_id')

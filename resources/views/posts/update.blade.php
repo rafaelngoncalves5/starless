@@ -21,7 +21,12 @@
             <textarea name='body' id='body'>{{ $post->body }}</textarea>
 
             <br />
-            <p>Created at: {{ $post->created_at }}</p>
+
+            <p>Created at: <span style='color: var(--primary-color);'>{{ $post->created_at }}</span></p>
+
+            @foreach($errors->all() as $error)
+            <span class='error'><strong> - </strong>{{ $error }}</span>
+            @endforeach
 
             <button type='submit'>Submit changes</button>
 

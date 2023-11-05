@@ -21,7 +21,8 @@ a {
     text-decoration: none;
 }
 
-.primary-btn, button[type='submit'] {
+.primary-btn,
+button[type='submit'] {
     color: var(--accent-color);
     background-color: var(--primary-color);
     box-shadow: var(--material-bs);
@@ -82,4 +83,9 @@ li {
     padding: 1rem;
     box-shadow: var(--material-bs);
     margin-top: 4rem;
+}
+
+.error {
+    color: var(--primary-color);
+    margin: 1.5rem 0;
 }
