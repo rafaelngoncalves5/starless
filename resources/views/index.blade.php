@@ -9,6 +9,10 @@
     <main>
         <h1>Routes:</h1>
 
+        @if (Auth::check())
+        <p style='font-size: smaller;'>Hello <strong>{{ Auth::user()->username }}</strong></p>
+        @endif
+
         <ul>
             <li style='box-shadow:none;'>
                 <a href="{{ route('post_index') }}">Posts <strong>[CRUD]</strong></a>
@@ -17,7 +21,16 @@
             <hr />
 
             <li style='box-shadow:none;'>
-                <a href="{{ route('user_create') }}">Create User</a>
+                <a href="{{ route('user_create') }}">Sign Up</a>
+            </li>
+
+            <li style='box-shadow: none;'>
+                @if (Auth::check())
+                <a href="{{ route('logout') }}">Logout</a>
+
+                @else
+                <a href="{{ route('login') }}">Login</a>
+                @endif
             </li>
 
         </ul>
