@@ -55,3 +55,29 @@ fazer isso nas migrações do eloquent
 15 - Percebi um erro de timestamp do mysql e usei o public $timestamps = false e
 gerei a migração com $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
+16 - Estou abismado com o poder do laravel para validações... Sempre tive um problema
+considerável com validações de usuários cadastrados, com o laravel fazer isso, ficou
+bem mais fácil:
+
+// No controller de user creation
+
+$request->validate([
+    'username' => "unique:users|required|string|string",
+    'email' => ["unique:users", "email", "required", "confirmed", "filled"],
+    'password' => ["required", "filled", "string", "confirmed", 
+    // Chamando o password do Illuminate\Validation\Rules\Password
+    Password::min(8)
+        ->mixedCase()
+        ->symbols()
+        ->numbers()
+        ->uncompromised()
+    ],
+]) // ...
+
+Daí, nas views, eu enviei usando o @foreach($errors->all() as $error) os erros da session.
+
+Retornei os 'values' para não chatear a UX com a helper {{ old('field_name') }}, ou, 
+$request->old('field_name').
+
+Interessante notar, que, o confirmed pega os dados nomeados 'fieldname_confirmation' da 
+request e verificam se eles batem com o 'fieldname'.
