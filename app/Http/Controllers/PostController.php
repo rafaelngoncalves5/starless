@@ -74,11 +74,11 @@ class PostController extends Controller
         }
     }
 
-    public function delete(int $id, Request $request) : RedirectResponse
+    public function delete(int $id, Request $request) : view
     {
         Post::findOrFail($id)->delete();
 
-        return to_route("success", ["feedback" => "The post $id was deleted with success!"]);
+        return view("success", ["feedback" => "The post $id was deleted with success!"]);
     }
 }
 
