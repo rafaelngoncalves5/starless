@@ -12,10 +12,10 @@
             @csrf
 
             <label for='title'>Title:</label>
-            <input id='title' name='title' placeholder='Thinking about stuff...'></input>
+            <input id='title' name='title' placeholder='Thinking about stuff...' value="{{ old('title') }}"></input>
 
             <label for='body'>Body:</label>
-            <textarea id='body' name='body'></textarea>
+            <textarea id='body' name='body' value="{{ old('body') }}"></textarea>
 
             @foreach($errors->all() as $error)
             <span class='error'><strong> - </strong>{{ $error }}</span>
