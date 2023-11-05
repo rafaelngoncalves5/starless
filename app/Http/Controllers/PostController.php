@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -36,28 +38,29 @@ class PostController extends Controller
             $title = $data["title"];
             $body = $data["body"];
 
-            $new_post = Post::create(["title" => $title, "body" => $body, "user_id" => 1]);
+            $new_post = Post::create(["title" => $title, "body" => $body, "user_id" => Auth::user()->id]);
 
             return view("success", ['feedback' => "Post {$new_post->body} created with success!"]);
 
         } else {
             // Could place for a custom not allowed view
-            return view(abort(405, "Error: method not allowed!"));
+            return abort(405, "Error: method not allowed!");
         }
     }
 
-    public function update(int $id, Request $request) : view
+    public function update(int $id, Request $request): view
     {
+        $post = Post::findOrFail($id);
+
+        // Autorização
+        if (!Gate::allows('update-post', $post)) {
+            return abort(403, "Error: not authorized!");
+        }
+
         if ($request->method() == "GET") {
-
-            $post = Post::findOrFail($id);
-
             return view("posts.update", ['post' => $post]);
 
         } else if ($request->method() == 'POST' || $request->method() == 'PUT') {
-
-            $post = Post::findOrFail($id);
-
             // Validates, and throw it all to the session
             $request->validate([
                 "title" => ["required", "max:50", "filled", "string"],
@@ -70,12 +73,18 @@ class PostController extends Controller
 
             return view('success', ['feedback' => "Post {$post->title} updated with success!"]);
         } else {
-            return view(abort(405, "Error: method not allowed!"));
+            return abort(405, "Error: method not allowed!");
         }
     }
 
-    public function delete(int $id, Request $request) : view
+    public function delete(int $id, Request $request): view
     {
+        $post = Post::findOrFail($id);
+
+        if (!Gate::allows("update-post", $post)) {
+            return abort(403, "Error: method not allowed!");
+        }
+
         Post::findOrFail($id)->delete();
 
         return view("success", ["feedback" => "The post $id was deleted with success!"]);

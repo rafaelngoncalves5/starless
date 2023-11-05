@@ -23,8 +23,8 @@ Route::view("/success", 'success')->name("success");
 Route::controller(PostController::class)->group(function () {
     Route::get("/posts/", "index")->name("post_index");
     Route::match(['get', 'post'], '/posts/create', 'create')->name('post_create')->middleware('auth');
-    Route::match(['get', 'post', 'put'], '/posts/update/{id}', 'update')->name('post_update');
-    Route::match(['delete', 'post'], '/posts/delete/{id}', 'delete')->name('post_delete');
+    Route::match(['get', 'post', 'put'], '/posts/update/{id}', 'update')->name('post_update')->middleware('auth');
+    Route::match(['delete', 'post'], '/posts/delete/{id}', 'delete')->name('post_delete')->middleware('auth');
 });
 
 // Users

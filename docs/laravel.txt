@@ -115,4 +115,22 @@ Route::get('/route_to', [ModelController::class, 'action_name'])->middleware('au
 
 Para finalizar, altero na env a SESSION_LIFETIME (em minutos)
 
-18 - 
+18 - Autorização:
+    18.1 - Fui em App\Providers\AuthServiceProvider
+    18.2 - use Illuminate\Support\Facades\Gate;
+    18.3 - No método boot eu:
+
+    Get::define("gate-name", function(){
+        return something;
+    });
+    
+    18.4 - Daí no controlador da rota em questão:
+
+    use Illuminate\Support\Facades\Gate;
+
+    public function signature...(Post $post) {
+        if (!Gate::allows('gate-name', $post)) {
+            abort(403);
+        }
+        // Do something
+    }
