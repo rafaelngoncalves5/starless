@@ -1,13 +1,13 @@
 1 - Primeiro instalei com o -> composer create-project laravel/laravel my-app
 
-2 - Apareceu -> 'Your requirements could not be resolved to an installable set of 
+2 - Apareceu -> 'Your requirements could not be resolved to an installable set of
 packages.'
 
-2.1 - Rodei o comando -> composer install --ignore-platform-reqs para resolver o 
+2.1 - Rodei o comando -> composer install --ignore-platform-reqs para resolver o
 problema
 
-3 - Apareceu -> Failed to download spatie/ignition from dist: The zip extension and 
-unzip/7z commands are both missing, skipping. The php.ini used by your command-line 
+3 - Apareceu -> Failed to download spatie/ignition from dist: The zip extension and
+unzip/7z commands are both missing, skipping. The php.ini used by your command-line
 PHP is: C:\php\php.ini Now trying to download from source
 
 3.1 - Então eu descomentei o ';extension=zip' no 'php.ini'
@@ -16,4 +16,125 @@ PHP is: C:\php\php.ini Now trying to download from source
 
 5 - Após isso, fui no .env na raíz do projeto e configurei as variáveis do bd pra MySQL
 
-6 - 
+6 - Li uma tonelada de documentação
+
+7 - Fui tentar fazer algo na prática
+
+8 - Criei uma model Post, usei mass assignment e $attributes, daí rodei o artisan com
+as migrações para criar as models user e Post
+
+9 - Criei uma view nova e renderizei sem controller nas rota "/"
+
+10 - Reparei num com application key lacking
+
+10.1 - Para resolver, rodei os seguintes comandos:
+    - php artisan key:generate
+    - php artisan config:cache
+
+11 - Criei uma tabela posts usando o comando php artisan make:migration
+create_posts_table e apliquei as migrações com o php artisan migrate
+
+12 - Depois de 5k horas, descobri que não definimos as colunas nas models, precisamos
+fazer isso nas migrações do eloquent
+
+13 - O processo com o eloquent é:
+
+    13.1 - php artisan make:model NomeModel
+    13.2 - php artisan make:migration create_nomemodels_table
+    13.3 - Altera as migrações manualmente
+    13.4 - php artisan migrate
+
+14 - Aprendi que no eloquent, uma many-to-many, é feita da seguinte forma:
+    14.1 - Cria as tabelas
+    14.2 - Cria a tabela terciária (normalmente weak entity) com unsignedBigIntegers
+    14.3 - Roda as migrações
+    14.4 - Cria as respectivas funções de acesso nas tabelas linkadas usando o
+    'belongsToMany()', nas models
+    14.5 - Uso o attach() para POST e sync() para PUT para fazer a relação. Obs, o nome deve 
+    ser no singular, tipo: post_user, lembre também, de passar o id das tables na pivô, como:
+    post_id e user_id, para que funcione
+    14.6 - Tu pode passar o --path="relative/path/to/migration_name.php" como parâmetro no
+    artisan migrate para criar apenas uma tabela!
+
+15 - Percebi um erro de timestamp do mysql e usei o public $timestamps = false e
+gerei a migração com $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+
+16 - Estou abismado com o poder do laravel para validações... Sempre tive um problema
+considerável com validações de usuários cadastrados, com o laravel fazer isso, ficou
+bem mais fácil:
+
+// No controller de user creation
+
+$request->validate([
+    'username' => "unique:users|required|string|string",
+    'email' => ["unique:users", "email", "required", "confirmed", "filled"],
+    'password' => ["required", "filled", "string", "confirmed", 
+    // Chamando o password do Illuminate\Validation\Rules\Password
+    Password::min(8)
+        ->mixedCase()
+        ->symbols()
+        ->numbers()
+        ->uncompromised()
+    ],
+]) // ...
+
+Daí, nas views, eu enviei usando o @foreach($errors->all() as $error) os erros da session.
+
+Retornei os 'values' para não chatear a UX com a helper {{ old('field_name') }}, ou, 
+$request->old('field_name').
+
+Interessante notar, que, o confirmed pega os dados nomeados 'fieldname_confirmation' da 
+request e verificam se eles batem com o 'fieldname'.
+
+17 - 
+
+use Illuminate\Support\Facades\Auth;
+
+$credentials = $request->validate([
+    $username => ['...'],
+    $password => ['...'],
+]);
+
+if (Auth::attempt($credentials)) {
+    $request->session()->regenerate();
+
+    return some view;
+}
+
+return back()->withErrors([
+    'email' => "Error: some stuff"
+]);
+
+Daí no blade 
+
+@if (Auth::check())
+<h2>Hello: {{ Auth::user()->username }}!</h2>
+@endif
+
+Daí, posso adicionar protected routes assim:
+
+use Illuminate\Auth\Middleware\Authenticate;
+
+Route::get('/route_to', [ModelController::class, 'action_name'])->middleware('auth');
+
+Para finalizar, altero na env a SESSION_LIFETIME (em minutos)
+
+18 - Autorização:
+    18.1 - Fui em App\Providers\AuthServiceProvider
+    18.2 - use Illuminate\Support\Facades\Gate;
+    18.3 - No método boot eu:
+
+    Get::define("gate-name", function(){
+        return something;
+    });
+    
+    18.4 - Daí no controlador da rota em questão:
+
+    use Illuminate\Support\Facades\Gate;
+
+    public function signature...(Post $post) {
+        if (!Gate::allows('gate-name', $post)) {
+            abort(403);
+        }
+        // Do something
+    }

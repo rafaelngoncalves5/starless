@@ -1,6 +1,6 @@
-CREATE DATABASE database_name;
+CREATE DATABASE laravel;
 
-USE database_name;
+USE laravel;
 
 CREATE TABLE `users` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
