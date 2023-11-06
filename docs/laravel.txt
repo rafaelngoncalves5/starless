@@ -138,3 +138,6 @@ Para finalizar, altero na env a SESSION_LIFETIME (em minutos)
         }
         // Do something
     }
+
+20 - As rotas da API, por padrão, já prefixam um "/api/" antes do nome regitrado manualmente da
+rota! Vi isso com o `php artisan r:l`
