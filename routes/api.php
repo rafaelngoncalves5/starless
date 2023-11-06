@@ -19,8 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function (Request $request ) { 
-    return response()->json("Thanks children", 200);
+Route::get('/', function (Request $request) {
+    return response()->json("Welcome to our REST API");
 });
 
 Route::controller(PostAPIController::class)->group(function () {
