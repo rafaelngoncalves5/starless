@@ -50,7 +50,11 @@ fazer isso nas migrações do eloquent
     14.3 - Roda as migrações
     14.4 - Cria as respectivas funções de acesso nas tabelas linkadas usando o
     'belongsToMany()', nas models
-    14.5 - Uso o attach() para fazer a relação
+    14.5 - Uso o attach() para POST e sync() para PUT para fazer a relação. Obs, o nome deve 
+    ser no singular, tipo: post_user, lembre também, de passar o id das tables na pivô, como:
+    post_id e user_id, para que funcione
+    14.6 - Tu pode passar o --path="relative/path/to/migration_name.php" como parâmetro no
+    artisan migrate para criar apenas uma tabela!
 
 15 - Percebi um erro de timestamp do mysql e usei o public $timestamps = false e
 gerei a migração com $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

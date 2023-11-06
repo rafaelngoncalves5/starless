@@ -10,6 +10,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PostUser;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -17,7 +19,8 @@ class PostController extends Controller
     public function index(): View
     {
         $posts = Post::all();
-        return view("posts.index", ['posts' => $posts]);
+        $users = User::all();
+        return view("posts.index", ['posts' => $posts, 'users' => $users]);
     }
 
     public function create(Post $post, Request $request): view
@@ -38,7 +41,7 @@ class PostController extends Controller
             $title = $data["title"];
             $body = $data["body"];
 
-            $new_post = Post::create(["title" => $title, "body" => $body, "user_id" => Auth::user()->id]);
+            $new_post = Post::create(["title" => $title, "body" => $body, "user_id" => Auth::user()->id]);            
 
             return view("success", ['feedback' => "Post {$new_post->body} created with success!"]);
 
@@ -53,7 +56,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         // Autorização
-        if (!Gate::allows('update-post', $post)) {
+        if (!Gate::allows('update-post', $post) && !Auth::user()->is_admin) {
             return abort(403, "Error: not authorized!");
         }
 
@@ -81,13 +84,32 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        if (!Gate::allows("update-post", $post)) {
+        if (!Gate::allows("update-post", $post) && !Auth::user()->is_admin) {
             return abort(403, "Error: method not allowed!");
         }
 
         Post::findOrFail($id)->delete();
 
         return view("success", ["feedback" => "The post $id was deleted with success!"]);
+    }
+
+    public function like_post(Request $request, int $id): RedirectResponse
+    {
+        if ($request->method() !== 'GET') {
+            return abort(403, "Error: method not allowed!");
+        }
+
+        $post = Post::findOrFail($id);
+
+        // Only likes the first time
+        if (PostUser::where("post_id", $post->id)->where("user_id", Auth::user()->id)->count() == 0) {
+            $post->likes_counter += 1;
+            $post->users()->attach(Auth::user());
+
+            $post->save();
+        }
+
+        return redirect("/posts/");
     }
 }
 
