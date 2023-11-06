@@ -24,7 +24,9 @@
             @endforeach
             <li><strong>Posted by</strong> - {{ $post['user_id'] }}</li>
 
-            @if (Auth::check() && $post['user_id'] == Auth::user()->id || Auth::user()->is_admin)
+            @if (Auth::check())
+
+            @if ($post['user_id'] == Auth::user()->id || Auth::user()->is_admin)
             <div style='margin: 1rem 0; display: flex; justify-content: center;'>
 
                 <a href="{{ route('post_update', $post['id']) }}" class='primary-btn' style='background-color: var(--accent-color); color: var(--primary-color); text-decoration: none; font-size: larger;  font-weight: bold;'>Edit</a>
@@ -36,6 +38,7 @@
                 </form>
 
             </div>
+            @endif
             @endif
 
         </ul>
