@@ -4,24 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
-use Response;
+use Illuminate\Validation\Rules\Password;
 
 class UserAPIController extends Controller
 {
-    public function register(Request $request): Response
+    public function register(Request $request)
     {
         if ($request->method() == "POST") {
             $request->validate([
                 'username' => 'required|unique:users|filled|string',
-                'email' => ['required', 'email', 'unique:users', 'filled', 'confirmed'],
+                'email' => ['required', 'email', 'unique:users', 'filled'],
                 'password' => [
                     'required',
                     'filled',
                     'string',
-                    'confirmed',
                     Password::min(8)
                         ->mixedCase()
                         ->numbers()
@@ -29,6 +26,7 @@ class UserAPIController extends Controller
                         ->uncompromised()
                 ]
             ]);
+            return response()->json("User $request->username created with success!", 200);
         } else {
             return response()->json('Error: method not allowed!', 403);
         }

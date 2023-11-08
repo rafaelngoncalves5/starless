@@ -17,24 +17,34 @@ use App\Http\Controllers\PostAPIController;
 */
 
 Route::get('/', function (Request $request) {
-    return response()->json([
-        "Welcome to our API!" => "List of available endpoints: ",
+    return response()->json(
         [
-            "Users" => [
-                "/user/token" => "Generates an user's token. Accepts `POST`. Receives login and password.",
-                "/user/logout" => "Logout an user, previously logged. Accepts `GET`.",
-            ],
+            "Welcome to our REST API!" => "List of available endpoints:",
 
-            "Posts" => [
-                "/posts" => "Displays a list of all available posts. Accepts `GET`."
+            "Endpoints" => [
+
+                "Users" => [
+                    "/user/token" => "Generates an user's token. Accepts `POST`. Receives `login` and `password`.",
+                    "/user/logout" => "Logout an user, previously logged. Accepts `GET`. Receives a `bearer token`.",
+                    "/user/register" => "Register a new user. Accepts `POST`. Receives `username`, `email` and `password`.",
+                ],
+
+                "Posts" => [
+                    "/posts" => "Displays a list of all available posts. Accepts `GET`."
+
+                ]
+
             ]
         ]
-    ]);
+    );
 });
 
 // Users
-Route::post('/user/token', [UserAPIController::class, 'token']);
-Route::get('/user/logout', [UserAPIController::class, 'logout'])->middleware('auth:sanctum');
+Route::controller(UserAPIController::class)->prefix('user')->group(function () {
+    Route::post('token', 'token');
+    Route::get('logout', 'logout');
+    Route::post('register', 'register');
+});
 
 // Posts
 Route::controller(PostAPIController::class)->prefix('posts')->group(function () {
