@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostAPIController extends Controller
 {
     public function index()
     {
-        return response()->json(["msg" => "welcome to posts!"], 200);
+        $posts = Post::all();
+
+        return response()->json(["posts" => $posts], 200);
     }
 }
