@@ -141,3 +141,46 @@ Para finalizar, altero na env a SESSION_LIFETIME (em minutos)
 
 20 - As rotas da API, por padrão, já prefixam um "/api/" antes do nome regitrado manualmente da
 rota! Vi isso com o `php artisan r:l`
+
+21 - Um exemplo de login com Sanctum seria:
+
+    21.1 - Controlador básico exemplo:
+
+public function token(Request $request)
+    {
+        if ($request->method() === "POST") {
+
+            // Check
+            $user = User::where("username", $request->username)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                // Generate token
+                return $user->createToken($user->username)->plainTextToken;
+
+            } else {
+                return response()->json("Error: invalid username or password!", 400);
+            }
+
+        } else {
+            return response()->json('Error: method not allowed!', 405);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        if ($request->user()) {
+            $request->user()->tokens->delete();
+
+            return response()->json('Logged out with success', 200);
+        } else {
+            return response()->json("Error: you're not logged in", 400);
+        }
+    }
+
+    21.2 - Daí nas rotas tu insere o middleware('auth:sanctum');
+
+    21.3 - E envia um bearer com o token gerado (header):
+        // Exemplo
+    	"Bearer 6|gGJ7e7qee8LryzmfmbWMKs1jMaY1iz5CdQx6Euat2b4ba97d"
+
+    21.4 - Não esqueça-se de adicionar na requsição um Accept = application/json;

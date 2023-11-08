@@ -17,18 +17,26 @@ use App\Http\Controllers\PostAPIController;
 */
 
 Route::get('/', function (Request $request) {
-    return response()->json("Welcome to our REST API");
+    return response()->json([
+        "Welcome to our API!" => "List of available endpoints: ",
+        [
+            "Users" => [
+                "/user/token" => "Generates an user's token. Accepts `POST`. Receives login and password.",
+                "/user/logout" => "Logout an user, previously logged. Accepts `GET`.",
+            ],
+
+            "Posts" => [
+                "/posts" => "Displays a list of all available posts. Accepts `GET`."
+            ]
+        ]
+    ]);
 });
 
 // Users
 Route::post('/user/token', [UserAPIController::class, 'token']);
-Route::post('/user/logout', [UserAPIController::class,'logout']);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return response()->json($request->user());
-});
+Route::get('/user/logout', [UserAPIController::class, 'logout'])->middleware('auth:sanctum');
 
 // Posts
-Route::controller(PostAPIController::class)->group(function () {
-    Route::get('/posts', 'index');
+Route::controller(PostAPIController::class)->prefix('posts')->group(function () {
+    Route::get('', 'index');
 });

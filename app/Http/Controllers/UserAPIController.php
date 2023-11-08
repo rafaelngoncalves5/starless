@@ -43,7 +43,7 @@ class UserAPIController extends Controller
 
             if ($user && Hash::check($request->password, $user->password)) {
                 // Generate token
-                return $user->createToken($user->email)->plainTextToken;
+                return $user->createToken($user->username)->plainTextToken;
 
             } else {
                 return response()->json("Error: invalid username or password!", 400);
@@ -56,15 +56,13 @@ class UserAPIController extends Controller
 
     public function logout(Request $request)
     {
-        /*
-        Auth::logout();
+        if ($request->user()) {
+            $request->user()->tokens()->delete();
 
-        $request->user()->tokens->delete();
-
-        return redirect('api/');
-        */
-
-        return response()->json($request->all()['username'], 200);
+            return response()->json('Logged out with success', 200);
+        } else {
+            return response()->json("Error: you're not logged in", 400);
+        }
     }
 
 }
