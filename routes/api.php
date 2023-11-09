@@ -50,4 +50,5 @@ Route::controller(UserAPIController::class)->prefix('user')->group(function () {
 Route::controller(PostAPIController::class)->prefix('posts')->group(function () {
     Route::get('', 'index');
     Route::post('create', 'create')->middleware('auth:sanctum');
+    Route::match(['put', 'post'], 'update/{id}', 'update')->middleware('auth:sanctum');
 });

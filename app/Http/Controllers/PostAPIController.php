@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Gate;
 
 class PostAPIController extends Controller
 {
@@ -27,6 +28,27 @@ class PostAPIController extends Controller
 
         return response()->json("Post `{$request->title}` created with success!", 200);
 
+    }
+    public function Update(Request $request, int $id)
+    {
+        
+        $post = Post::findOrFail($id);
+
+        if (!Gate::allows("update-post", $post) && !$request->user()->is_admin) {
+            return response()->json("Error: you are not allowed to access this resource!", 403);
+        }
+
+        $request->validate([
+            "title" => ["required", "max:50", "filled", "string"],
+            "body" => ["required", "filled", "string"]
+        ]);
+
+        $post->title = $request->title;
+        $post->body = $request->body;
+
+        $post->save();
+
+        return response()->json("Post `{$request->title}` changed with success!", 200);
     }
 }
 /*
