@@ -61,6 +61,12 @@ class PostAPIController extends Controller
         $post->delete();
         return response()->json("Post `$post->title` deleted with success!", 200);
     }
+
+    public function details(Request $request, int $id) {
+        $post = Post::findOrFail($id);
+
+        return response()->json($post, 200);
+    }
 }
 /*
 {
