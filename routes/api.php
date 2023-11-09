@@ -24,15 +24,21 @@ Route::get('/', function (Request $request) {
             "Endpoints" => [
 
                 "Users" => [
-                    "/user/token" => "Generates an user's token. Accepts `POST`. Receives `login` and `password`.",
+                    "/user/token" => "Generates an user's token. Accepts `POST`. Receives `login[string]` and `password[string]`.",
                     "/user/logout" => "Logout an user, previously logged. Accepts `GET`. Receives a `bearer token`.",
-                    "/user/register" => "Register a new user. Accepts `POST`. Receives `username`, `email` and `password`.",
+                    "/user/register" => "Register a new user. Accepts `POST`. Receives `username[string]`, `email[string]` and `password[string]`.",
                 ],
 
                 "Posts" => [
                     "/posts" => "Displays a list of all available posts. Accepts `GET`.",
-                    "/posts/create" => "Creates a new post. Accepts `POST`. Receives `Title` and `Body`."
-                ]
+                    "/posts/create" => "Creates a new post. Accepts `POST`. Receives a `bearer token`, `title[string]` and `body[string]`.",
+                    "/posts/update/{id}" => "Updates an existing post. Accepts `PUT` and `POST`. Receives a `bearer token`, `title[string]`, `body[string]` and an `id[int]` query param.",
+                    "/posts/delete/{id}" => "Deletes a post by id. Accepts `POST and `DELETE`. Receives a `bearer token` and an `id[int]` query param.",
+
+
+                ],
+
+                "Observation: if the endpoint receives a `bearer token`, it means that you must be authenticated!"
 
             ]
         ]
@@ -51,4 +57,5 @@ Route::controller(PostAPIController::class)->prefix('posts')->group(function () 
     Route::get('', 'index');
     Route::post('create', 'create')->middleware('auth:sanctum');
     Route::match(['put', 'post'], 'update/{id}', 'update')->middleware('auth:sanctum');
+    Route::match(['delete', 'post'], 'delete/{id}', 'delete')->middleware('auth:sanctum');
 });
