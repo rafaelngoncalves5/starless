@@ -30,8 +30,8 @@ Route::get('/', function (Request $request) {
                 ],
 
                 "Posts" => [
-                    "/posts" => "Displays a list of all available posts. Accepts `GET`."
-
+                    "/posts" => "Displays a list of all available posts. Accepts `GET`.",
+                    "/posts/create" => "Creates a new post. Accepts `POST`. Receives `Title` and `Body`."
                 ]
 
             ]
@@ -42,11 +42,12 @@ Route::get('/', function (Request $request) {
 // Users
 Route::controller(UserAPIController::class)->prefix('user')->group(function () {
     Route::post('token', 'token');
-    Route::get('logout', 'logout');
+    Route::get('logout', 'logout')->middleware('auth:sanctum');
     Route::post('register', 'register');
 });
 
 // Posts
 Route::controller(PostAPIController::class)->prefix('posts')->group(function () {
     Route::get('', 'index');
+    Route::post('create', 'create')->middleware('auth:sanctum');
 });
