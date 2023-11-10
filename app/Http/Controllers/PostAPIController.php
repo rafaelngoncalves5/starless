@@ -62,10 +62,26 @@ class PostAPIController extends Controller
         return response()->json("Post `$post->title` deleted with success!", 200);
     }
 
-    public function details(Request $request, int $id) {
+    public function details(Request $request, int $id)
+    {
         $post = Post::findOrFail($id);
 
         return response()->json($post, 200);
+    }
+
+    public function like(Request $request, int $id)
+    {
+        $post = Post::findOrFail($id);
+
+        if ($request->user()->id !== $post->user_id) {
+            return response()->json("Error: you are the owner of the resource (post), therefore, you're not allowed to proceed that operation!", 403);
+        }
+
+        $post->likes_counter += 1;
+        $post->users()->attach($request->user());
+        $post->save();
+
+        return response()->json("Post `{$post->title}` liked with success!", 200);
     }
 }
 /*

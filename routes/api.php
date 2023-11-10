@@ -34,8 +34,8 @@ Route::get('/', function (Request $request) {
                     "/posts/create" => "Creates a new post. Accepts `POST`. Receives a `bearer token`, `title[string]` and `body[string]`.",
                     "/posts/update/{id}" => "Updates an existing post. Accepts `PUT` and `POST`. Receives a `bearer token`, `title[string]`, `body[string]` and an `id[int]` query param.",
                     "/posts/delete/{id}" => "Deletes a post by id. Accepts `POST and `DELETE`. Receives a `bearer token` and an `id[int]` query param.",
-                    "/posts/details/{id}" => "Return a details page with the requested post, using it's id. Accepts `GET`. Receives an `id[int]` query param."
-
+                    "/posts/details/{id}" => "Return a details page with the requested post, using it's id. Accepts `GET`. Receives an `id[int]` query param.",
+                    "/posts/like/{id}" => "Likes a posts by id. Accepts `POST` and `GET`. Receives an `id[int]` query param and a `bearer token`."
                 ],
 
                 "Observation: if the endpoint receives a `bearer token`, it means that you must be authenticated!"
@@ -59,5 +59,6 @@ Route::controller(PostAPIController::class)->prefix('posts')->group(function () 
     Route::match(['put', 'post'], 'update/{id}', 'update')->middleware('auth:sanctum');
     Route::match(['delete', 'post'], 'delete/{id}', 'delete')->middleware('auth:sanctum');
     Route::get('details/{id}', 'details');
-    // Many-to-many e file upload on posting ou updating...
+
+    Route::match(['post', 'get'], '/like/{id}', 'like')->middleware('auth:sanctum');
 });
