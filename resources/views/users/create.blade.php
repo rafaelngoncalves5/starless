@@ -7,7 +7,7 @@
 
     <main>
 
-        <h1>Post your stuff here!</h1>
+        <h1>Register a new user</h1>
         <form method='post' action="{{ route('user_create') }}">
             @csrf
 
