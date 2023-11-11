@@ -33,6 +33,12 @@
                 @endif
             </li>
 
+            <hr />
+
+            <li style='box-shadow:none;'>
+                <a href="/api/">REST API</a>
+            </li>
+
         </ul>
     </main>
 

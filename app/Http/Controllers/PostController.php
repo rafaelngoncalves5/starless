@@ -37,7 +37,8 @@ class PostController extends Controller
             ]);
 
             $data = $request->all();
-
+            
+            // Fiz esse tipo de coisa antes de ler a documentação das Requests, por isso tão deselegante
             $title = $data["title"];
             $body = $data["body"];
 
