@@ -10,13 +10,16 @@
         <ul>
             <li class='odd-li'><strong>Title</strong> - {{ $post['title'] }}</li>
 
+            <img src="{{ asset('/uploads/'. $post->picture) }}" alt="{{ $post->picture }}" />
+
             <li><strong>Body</strong> - {{ $post['body'] }}</li>
 
             <li><strong>Created at - </strong>{{ $post['created_at'] }}</li>
 
             <li><strong><a href="{{ route('post_like', $post['id']) }}" style='background: none; border: 0; cursor: pointer; text-decoration: none;'>💗</a></button></strong> - {{ $post['likes_counter'] }}</li>
 
-            {{-- Will be changed when I implement one-to-many correctly --}}
+            {{-- ... --}}
+
             @foreach($users as $user)
             @if ($user['id'] === $post['user_id'])
             <li><strong>Posted by</strong> - {{ "@$user->username" }}</li>

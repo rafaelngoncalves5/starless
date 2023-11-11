@@ -61,4 +61,5 @@ Route::controller(PostAPIController::class)->prefix('posts')->group(function () 
     Route::get('details/{id}', 'details');
 
     Route::match(['post', 'get'], '/like/{id}', 'like')->middleware('auth:sanctum');
+    Route::post('/upload/{id}', 'upload')->middleware('auth:sanctum');
 });
