@@ -19,6 +19,10 @@ use App\Http\Controllers\UserController;
 Route::view("/", 'index')->name("index");
 Route::view("/success", 'success')->name("success");
 
+Route::get("/curriculum", function () {
+    return view('curriculum');
+})->name('curriculum');
+
 // Posts
 Route::controller(PostController::class)->group(function () {
     Route::get("/posts/", "index")->name("post_index");

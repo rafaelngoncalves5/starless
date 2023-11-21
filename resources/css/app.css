@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    padding: 0;
+    box-sizing: content-box;
+    margin: 0;
+}
+
+#curriculum-body {
+    display: grid;
+    /* Quantidade de colunas e tamanho */
+    grid-template-columns: 100%;
+    /* Quantidade de linhas e tamanho */
+    grid-template-rows: fit-content fit-content fit-content;
+}
+
+.cloud {
+    animation: infinite 2s ease-in-out;
+    animation-name: float-around;
+}
+
+@keyframes float-around {
+    0% {
+        transform: translate(0, 0px);
+    }
+
+    50% {
+        transform: translate(0, 15px);
+    }
+
+    100% {
+        transform: translate(0, -0px);
+    }
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}

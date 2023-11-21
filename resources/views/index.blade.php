@@ -39,6 +39,10 @@
                 <a href="/api/">REST API</a>
             </li>
 
+            <li style='box-shadow:none;'>
+                <a href="/curriculum/">Curriculum</a>
+            </li>
+
         </ul>
     </main>
 

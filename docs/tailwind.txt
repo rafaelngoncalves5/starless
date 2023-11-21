@@ -1,0 +1,27 @@
+https://tailwindcss.com/docs/guides/laravel
+
+Obs: só tinha tutorial com o webpack.mix, esse é com o vite...
+
+1 - npm install -D tailwindcss postcss autoprefixer
+
+2 - npx tailwindcss init -p
+
+3 - content: [
+    "./resources/**/*.blade.php",
+    "./resources/**/*.js",
+    "./resources/**/*.vue",
+  ],
+
+4 - No app.css:
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+5 - npm run dev
+
+6 - No cabeçalho do base.blade.php
+
+@vite('resources/css/app.css')
+
+Obs: preciso rodar o vite com o npm run dev toda vez antes de usar o tailwind no php artisan
+serve
