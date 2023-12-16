@@ -42,7 +42,7 @@
     {{-- Sans for headers and serif for larger texts  --}}
     <header class='font-bold text-center z-40'>
         <h1 class="text-sky-500 text-6xl font-sans">Rafael N</h1>
-        <p class="font-light text-zinc-400 mt-2 mb-5 pb-5 antialiased px-5">Estudante do 5º Semestre de Análise e Desenvolvimento de Sistemas na PUC-MG.</p>
+        <p class="font-light text-zinc-400 mt-2 mb-5 pb-5 antialiased px-5">Estudante do 5º Semestre de Análise e Desenvolvimento de Sistemas na PUC-MG. <br /> 22 anos de idade.</p>
     </header>
 
     <main id="curriculum-main" class="flex mx-sm:flex-col max-md:flex-col mt-5 pt-5 z-1">
