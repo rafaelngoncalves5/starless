@@ -141,8 +141,9 @@
 
                 <br />
                 {{-- Stack --}}
-                <li>C++/C, PHP, Laravel, Python</li>
+                <li>PHP, Laravel, Python</li>
                 <li>HTML, CSS, TypeScript, JavaScript, Tailwind CSS</li>
+                <li>C++/C, C# e .NET, Java</li>
                 <li>React, React Native</li>
                 <li>MySQL, bancos de dados relacionais e não relacionais</li>
                 <li>Hipervisores, máquinas virtuais, containers</li>
