@@ -96,6 +96,14 @@
                     <br />
 
                     <li>
+                        <strong>RNP e SENAI, SP — </strong> Programa de Cybersegurança Hackers do Bem
+                        <br />
+                        <strong>01/2024 - Atualmente</strong>
+                    </li>
+
+                    <br />
+
+                    <li>
                         <strong>SENAI, MS — </strong> Lógica de Programação
                         <br />
                         <strong>11/2023</strong>
